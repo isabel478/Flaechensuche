@@ -1,9 +1,9 @@
-const CACHE_NAME = "suchuebung-v1";
+const CACHE_NAME = "Flaechensuche-v1";
 
 const APP_FILES = [
-  "/Suchuebung/",
-  "/Suchuebung/index.html",
-  "/Suchuebung/startseite.png"
+  "/Flaechensuche/",
+  "/Flaechensuche/index.html",
+  "/Flaechensuche/startseite.png"
 ];
 
 self.addEventListener("install", (event) => {

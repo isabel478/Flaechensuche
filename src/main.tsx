@@ -10,6 +10,6 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/Suchuebung/service-worker.js");
+    navigator.serviceWorker.register("/Flaechensuche/service-worker.js");
   });
 }
