@@ -1,9 +1,11 @@
-const CACHE_NAME = "Flaechensuche-v3";
+const CACHE_NAME = "Flaechensuche-v4";
 
 const APP_FILES = [
   "/Flaechensuche/",
   "/Flaechensuche/index.html",
-  "/Flaechensuche/startseite.png"
+  "/Flaechensuche/startseite.png",
+  "/Flaechensuche/assets/index-CrRIxPnm.js",
+  "/Flaechensuche/assets/index-CHBDHdH3.css"
 ];
 
 self.addEventListener("install", (event) => {
