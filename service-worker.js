@@ -4,7 +4,7 @@ const APP_FILES = [
   "/Flaechensuche/",
   "/Flaechensuche/index.html",
   "/Flaechensuche/startseite.png",
-  "/Flaechensuche/assets/index-CrRIxPnm.js",
+  "/Flaechensuche/assets/index-CrRlxPnm.js",
   "/Flaechensuche/assets/index-CHBDHdH3.css"
 ];
 
@@ -20,13 +20,15 @@ self.addEventListener("install", (event) => {
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((names) =>
-      Promise.all(
-        names
-          .filter((name) => name !== CACHE_NAME)
-          .map((name) => caches.delete(name))
+    caches.keys()
+      .then((names) =>
+        Promise.all(
+          names
+            .filter((name) => name !== CACHE_NAME)
+            .map((name) => caches.delete(name))
+        )
       )
-    ).then(() => self.clients.claim())
+      .then(() => self.clients.claim())
   );
 });
 
@@ -34,20 +36,29 @@ self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
   event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        const copy = response.clone();
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+
+      return fetch(event.request).then((networkResponse) => {
+        const copy = networkResponse.clone();
 
         caches.open(CACHE_NAME).then((cache) => {
           cache.put(event.request, copy);
         });
 
-        return response;
-      })
-      .catch(() =>
-        caches.match(event.request).then((cachedResponse) => {
-          return cachedResponse || caches.match("/Flaechensuche/index.html");
-        })
-      )
+        return networkResponse;
+      }).catch(() => {
+        if (event.request.mode === "navigate") {
+          return caches.match("/Flaechensuche/index.html");
+        }
+
+        return new Response("", {
+          status: 503,
+          statusText: "Offline"
+        });
+      });
+    })
   );
 });
