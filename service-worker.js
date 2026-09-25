@@ -1,4 +1,4 @@
-const CACHE_NAME = "Flaechensuche-v2";
+const CACHE_NAME = "Flaechensuche-v3";
 
 const APP_FILES = [
   "/Flaechensuche/",
