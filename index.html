@@ -10,6 +10,14 @@
   </head>
 
   <body>
-    <div id="root"></div>
+    <div id="root"></div>
+
   </body>
+  <script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/Flaechensuche/service-worker.js");
+    });
+  }
+</script>
 </html>
